@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPUPSPIP — RUN THE STREET</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          volt: '#D4FF3D',
+          magenta: '#FF2E63',
+          ink: '#0D0D0D',
+          bone: '#F2F1EA',
+        },
+        fontFamily: {
+          display: ['Anton', 'sans-serif'],
+          heavy: ['Archivo Black', 'sans-serif'],
+          mono: ['Space Mono', 'monospace'],
+          body: ['Inter', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body{ background:#0D0D0D; }
+  .marquee-track{
+    display:flex; width:max-content;
+    animation: scroll 18s linear infinite;
+  }
+  @keyframes scroll{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+  .tilt-card{ transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease; }
+  .tilt-card:hover{ transform: rotate(-2deg) translateY(-6px); box-shadow: 10px 14px 0 0 #D4FF3D; }
+  .cut-corner{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%); }
+  .stroke-text{ -webkit-text-stroke: 1.5px #D4FF3D; color: transparent; }
+  ::selection{ background:#D4FF3D; color:#0D0D0D; }
+  .drawer{ transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); }
+  .drawer.show{ transform: translateX(0); }
+  .overlay{ opacity:0; pointer-events:none; transition:opacity .3s ease; }
+  .overlay.show{ opacity:1; pointer-events:auto; }
+  .toast{ opacity:0; transform:translate(-50%,16px); transition:all .25s ease; pointer-events:none; }
+  .toast.show{ opacity:1; transform:translate(-50%,0); }
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body class="bg-ink text-bone font-body">
+
+<!-- Marquee ticker -->
+<div class="bg-volt text-ink overflow-hidden border-b-4 border-ink whitespace-nowrap">
+  <div class="marquee-track py-2">
+    <span class="font-heavy text-sm px-6 tracking-wide">SPUPSPIP — RUN THE STREET ✦ NEW DROP ✦ FREE SHIP ฿1,500+ ✦ SPUPSPIP — RUN THE STREET ✦ NEW DROP ✦ FREE SHIP ฿1,500+ ✦</span>
+    <span class="font-heavy text-sm px-6 tracking-wide" aria-hidden="true">SPUPSPIP — RUN THE STREET ✦ NEW DROP ✦ FREE SHIP ฿1,500+ ✦ SPUPSPIP — RUN THE STREET ✦ NEW DROP ✦ FREE SHIP ฿1,500+ ✦</span>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="sticky top-0 z-40 bg-ink/95 backdrop-blur border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="font-display text-3xl tracking-tight">SPUP<span class="text-volt">SPIP</span></div>
+    <nav class="hidden md:flex gap-8 font-mono text-xs uppercase tracking-widest text-white/70">
+      <a href="#shop" class="hover:text-volt transition">รองเท้า</a>
+      <a href="#shop" class="hover:text-volt transition">แฟชั่น</a>
+      <a href="#" class="hover:text-volt transition">เกี่ยวกับเรา</a>
+    </nav>
+    <button id="openCart" class="flex items-center gap-2 bg-volt text-ink font-heavy text-xs px-4 py-3 cut-corner hover:bg-magenta hover:text-white transition">
+      CART <span id="cartCount" class="bg-ink text-volt rounded-full w-5 h-5 flex items-center justify-center text-[11px]">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="relative overflow-hidden border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-6 pt-16 pb-20 md:pt-24 md:pb-28">
+    <p class="font-mono text-magenta text-xs uppercase tracking-[0.3em] mb-4">Season 01 — Concrete Collection</p>
+    <h1 class="font-display leading-[0.85] uppercase text-[16vw] md:text-[9vw] lg:text-[7.5rem]">
+      DON'T<br>
+      <span class="stroke-text">WALK.</span><br>
+      RUN.
+    </h1>
+    <div class="mt-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+      <p class="max-w-md text-white/60 text-base leading-relaxed">
+        รองเท้าวิ่งและสตรีทแฟชั่นจากแบรนด์ SPUPSPIP ออกแบบเพื่อคนที่ไม่หยุดอยู่กับที่ — เบา ทน แรงจริง ใส่ลงถนนได้ทุกวัน
+      </p>
+      <a href="#shop" class="shrink-0 inline-flex items-center gap-3 bg-bone text-ink font-heavy text-sm px-7 py-4 cut-corner hover:bg-volt transition">
+        SHOP THE DROP →
+      </a>
+    </div>
+  </div>
+  <div class="absolute -bottom-10 -right-10 w-72 h-72 border-[3px] border-volt/30 rounded-full hidden lg:block"></div>
+</section>
+
+<!-- Section head -->
+<div class="max-w-7xl mx-auto px-6 pt-16 pb-6 flex items-end justify-between" id="shop">
+  <h2 class="font-display text-4xl md:text-5xl uppercase">Latest<br class="md:hidden"> Drop</h2>
+  <span class="font-mono text-xs text-white/40" id="itemCountLabel">— items</span>
+</div>
+
+<!-- Product grid -->
+<div class="max-w-7xl mx-auto px-6 pb-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="productGrid"></div>
+
+<!-- Footer -->
+<footer class="border-t border-white/10 py-10">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="font-display text-xl">SPUP<span class="text-volt">SPIP</span></div>
+    <p class="font-mono text-[11px] text-white/40">© 2026 SPUPSPIP — RUN THE STREET. ALL RIGHTS RESERVED.</p>
+  </div>
+</footer>
+
+<!-- Cart overlay + drawer -->
+<div class="overlay fixed inset-0 bg-black/60 z-50" id="overlay"></div>
+<aside class="drawer fixed top-0 right-0 h-full w-[420px] max-w-[92vw] bg-ink border-l border-white/10 z-[51] flex flex-col" id="drawer">
+  <div class="flex items-center justify-between px-6 py-6 border-b border-white/10">
+    <h2 class="font-display text-2xl uppercase">Your Cart</h2>
+    <button id="closeCart" class="text-2xl leading-none text-white/60 hover:text-volt">✕</button>
+  </div>
+  <div class="flex-1 overflow-y-auto px-6" id="drawerItems"></div>
+  <div class="border-t border-white/10 px-6 py-6">
+    <div class="flex justify-between font-mono text-sm text-white/60 mb-2"><span>Subtotal</span><span id="subtotal">฿0</span></div>
+    <div class="flex justify-between font-mono text-sm text-white/60 mb-4"><span>Shipping</span><span id="shipping">฿0</span></div>
+    <div class="flex justify-between font-display text-2xl uppercase border-t border-white/10 pt-4 mb-5"><span>Total</span><span id="grandTotal" class="text-volt">฿0</span></div>
+    <button id="checkoutBtn" class="w-full bg-volt text-ink font-heavy text-sm py-4 cut-corner disabled:bg-white/10 disabled:text-white/30 hover:bg-magenta hover:text-white transition" disabled>CHECKOUT NOW</button>
+  </div>
+</aside>
+
+<div class="toast fixed bottom-6 left-1/2 -translate-x-1/2 bg-volt text-ink font-heavy text-xs px-6 py-3 cut-corner z-[60]" id="toast"></div>
+
+<script>
+const PRODUCTS = [
+  {id:1, name:"VOLT RUNNER X1", desc:"รองเท้าวิ่งพื้นเบา คืนแรงสูง สำหรับวิ่งถนนทุกวัน", price:2890, tag:"BESTSELLER", emoji:"👟", bg:"from-volt/20 to-transparent"},
+  {id:2, name:"PHANTOM TRAINER", desc:"เทรนเนอร์อเนกประสงค์ กริปแน่นทุกพื้นผิว", price:2590, tag:"NEW", emoji:"🥾", bg:"from-magenta/20 to-transparent"},
+  {id:3, name:"CONCRETE HOODIE", desc:"ผ้าฟลีซหนา ทรงโอเวอร์ไซส์ พิมพ์โลโก้หลัง", price:1290, tag:"NEW", emoji:"🧥", bg:"from-white/10 to-transparent"},
+  {id:4, name:"NIGHT CARGO PANT", desc:"ผ้าร่มกันน้ำ ทรงคาร์โก้ กระเป๋าเยอะ", price:1490, tag:"", emoji:"👖", bg:"from-volt/10 to-transparent"},
+  {id:5, name:"STREET SOCK 3-PACK", desc:"ถุงเท้ากันกระแทก หนาพิเศษ วิ่งได้ไกลขึ้น", price:390, tag:"", emoji:"🧦", bg:"from-magenta/10 to-transparent"},
+  {id:6, name:"BLACKOUT CAP", desc:"หมวกแก๊ปปักโลโก้ SPUPSPIP ปรับขนาดได้", price:590, tag:"", emoji:"🧢", bg:"from-white/10 to-transparent"},
+  {id:7, name:"ASPHALT WINDBREAKER", desc:"เสื้อกันลมบาง พับเก็บได้ กันน้ำเบื้องต้น", price:1690, tag:"BESTSELLER", emoji:"🧥", bg:"from-volt/20 to-transparent"},
+  {id:8, name:"GRIP RUNNER LOW", desc:"รองเท้าลำลองพื้นเตี้ย ใส่ได้ทั้งวัน", price:2190, tag:"", emoji:"👟", bg:"from-magenta/10 to-transparent"},
+];
+
+let cart = {};
+
+const grid = document.getElementById('productGrid');
+grid.innerHTML = PRODUCTS.map(p => `
+  <div class="tilt-card bg-white/[0.03] border border-white/10 cut-corner flex flex-col">
+    <div class="relative h-40 flex items-center justify-center text-6xl bg-gradient-to-br ${p.bg}">
+      ${p.tag ? `<span class="absolute top-3 left-3 font-mono text-[10px] tracking-widest bg-ink border border-volt text-volt px-2 py-1">${p.tag}</span>` : ''}
+      ${p.emoji}
+    </div>
+    <div class="p-5 flex flex-col gap-3 flex-1">
+      <h3 class="font-heavy text-sm uppercase leading-snug">${p.name}</h3>
+      <p class="text-xs text-white/45 leading-relaxed min-h-[32px]">${p.desc}</p>
+      <div class="mt-auto flex items-center justify-between pt-2">
+        <span class="font-mono text-volt text-base">฿${p.price.toLocaleString()}</span>
+        <button onclick="addToCart(${p.id})" aria-label="เพิ่มลงตะกร้า" class="w-9 h-9 flex items-center justify-center bg-bone text-ink font-heavy text-lg hover:bg-magenta hover:text-white transition">+</button>
+      </div>
+    </div>
+  </div>
+`).join('');
+document.getElementById('itemCountLabel').textContent = PRODUCTS.length + ' items';
+
+function addToCart(id){
+  cart[id] = (cart[id] || 0) + 1;
+  renderCart();
+  showToast('ADDED TO CART ✦');
+  openDrawer();
+}
+function changeQty(id, delta){
+  if(!cart[id]) return;
+  cart[id] += delta;
+  if(cart[id] <= 0) delete cart[id];
+  renderCart();
+}
+function removeItem(id){
+  delete cart[id];
+  renderCart();
+}
+
+function renderCart(){
+  const ids = Object.keys(cart);
+  const items = document.getElementById('drawerItems');
+  const count = ids.reduce((s,id)=>s+cart[id],0);
+  document.getElementById('cartCount').textContent = count;
+
+  if(ids.length === 0){
+    items.innerHTML = `<div class="text-center text-white/30 font-mono text-xs py-20">CART IS EMPTY<br><br>เลือกสินค้าที่ใช่ได้เลย 👟</div>`;
+  } else {
+    items.innerHTML = ids.map(id => {
+      const p = PRODUCTS.find(x => x.id == id);
+      const qty = cart[id];
+      return `
+        <div class="flex gap-4 py-5 border-b border-white/10">
+          <div class="text-3xl">${p.emoji}</div>
+          <div class="flex-1">
+            <h4 class="font-heavy text-xs uppercase mb-1">${p.name}</h4>
+            <div class="font-mono text-[11px] text-white/40 mb-2">฿${p.price.toLocaleString()}</div>
+            <div class="flex items-center gap-3">
+              <button class="w-6 h-6 border border-white/20 rounded-full text-xs hover:border-volt hover:text-volt" onclick="changeQty(${p.id},-1)">−</button>
+              <span class="font-mono text-xs">${qty}</span>
+              <button class="w-6 h-6 border border-white/20 rounded-full text-xs hover:border-volt hover:text-volt" onclick="changeQty(${p.id},1)">+</button>
+              <button class="font-mono text-[10px] text-magenta underline ml-auto" onclick="removeItem(${p.id})">ลบ</button>
+            </div>
+          </div>
+          <div class="font-mono text-sm text-volt self-start">฿${(p.price*qty).toLocaleString()}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  const subtotal = ids.reduce((s,id)=> s + PRODUCTS.find(x=>x.id==id).price * cart[id], 0);
+  const shipping = subtotal === 0 ? 0 : (subtotal >= 1500 ? 0 : 60);
+  const total = subtotal + shipping;
+
+  document.getElementById('subtotal').textContent = '฿' + subtotal.toLocaleString();
+  document.getElementById('shipping').textContent = (shipping === 0 && subtotal > 0) ? 'FREE' : '฿' + shipping.toLocaleString();
+  document.getElementById('grandTotal').textContent = '฿' + total.toLocaleString();
+
+  document.getElementById('checkoutBtn').disabled = ids.length === 0;
+}
+
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('overlay');
+function openDrawer(){ drawer.classList.add('show'); overlay.classList.add('show'); }
+function closeDrawer(){ drawer.classList.remove('show'); overlay.classList.remove('show'); }
+document.getElementById('openCart').onclick = openDrawer;
+document.getElementById('closeCart').onclick = closeDrawer;
+overlay.onclick = closeDrawer;
+
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> t.classList.remove('show'), 1600);
+}
+
+document.getElementById('checkoutBtn').onclick = () => {
+  const total = document.getElementById('grandTotal').textContent;
+  showToast(`ORDER CONFIRMED — ${total} ✦ RUN WITH SPUPSPIP`);
+  cart = {};
+  renderCart();
+  setTimeout(closeDrawer, 1400);
+};
+
+renderCart();
+</script>
+</body>
+</html>
